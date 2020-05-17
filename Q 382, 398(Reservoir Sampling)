@@ -1,0 +1,84 @@
+5.16.20 // Q 382, 398
+Reservoir Sampling
+As count increases, rand.nextInt(count) will randomly generate a value between 0 - count-1. The probability of keeping
+the existed value will decrease and the probability of changing into the new cur.val will increase. So after we 
+loop through the whole linked list, the probability of getting any of the elements will become the same. 
+
+
+382. Linked List Random Node
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+class Solution {
+
+    ListNode head;
+    Random rand;
+    /** @param head The linked list's head.
+        Note that the head is guaranteed to be not null, so it contains at least one node. */
+    public Solution(ListNode head) {
+        this.head = head;
+        this.rand = new Random();
+    }
+    
+    /** Returns a random node's value. */
+    public int getRandom() {
+        int res = 0, count = 0;
+        ListNode cur = head;
+        while (cur != null) {
+            count++;
+            int guess = rand.nextInt(count) + 1;
+            if (count == guess) {
+                res = cur.val;
+            }
+            cur = cur.next;
+        }
+        return res;
+    }
+    
+}
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution obj = new Solution(head);
+ * int param_1 = obj.getRandom();
+ */
+ 
+ 
+ 398. Random Pick Index
+ class Solution {
+
+    int[] nums;
+    Random rand;
+    public Solution(int[] nums) {
+        this.nums = nums;
+        rand = new Random();
+    }
+    
+    public int pick(int target) {
+        int res = 0, count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == target) {
+                count++;
+                int guess = rand.nextInt(count) + 1;
+                if (guess == count) {
+                    res = i;
+                }
+            }
+        }
+        return res;
+    }
+}
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution obj = new Solution(nums);
+ * int param_1 = obj.pick(target);
+ */
