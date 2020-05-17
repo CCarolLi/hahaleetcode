@@ -1,0 +1,87 @@
+5.17.20 // Q 1, 15, 18
+
+1. Two Sum (HashTable - O(n))
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        dict = {}
+        for i in range(len(nums)):
+            if (target - nums[i]) in dict:
+                return [i, dict[target-nums[i]]]
+            else:
+                dict[nums[i]] = i
+                
+15. 3Sum  (Two pointers)
+class Solution(object):
+    def threeSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        # two pointers
+
+        # pick a number, and then do two sum
+        nums.sort()  # step 1 to prevent duplicate triplets
+        res, curList = [], []
+        for i in range(len(nums) - 2):  # pick a number
+            if i > 0 and nums[i] == nums[i - 1]:  # do not pick the same number to avoid duplicate triplets
+                continue
+            left = i + 1
+            right = len(nums) - 1
+            while left < right:
+                curSum = nums[i] + nums[left] + nums[right]
+                curList = [nums[i], nums[left], nums[right]]
+                if curSum == 0:
+                    # find one triplet
+                    res.append(curList[:])
+                    while (left < right) and (nums[left] == nums[left + 1]):
+                        left += 1
+                    while (left < right) and (nums[right] == nums[right - 1]):
+                        right -= 1
+                    right -= 1
+                    left += 1
+                elif curSum > 0:
+                    right -= 1
+                else:
+                    left += 1
+        return res;
+        
+        
+18. 4Sum  (Two pointers)
+class Solution(object):
+    def fourSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        nums.sort()
+        res, curList = [], []
+        for i in range(len(nums) - 3):  # pick the first number
+            if i > 0 and nums[i] == nums[i - 1]:  # avoid picking the same number
+                continue
+            for j in range(i + 1, len(nums) - 2):  # pick the second number
+                if j - 1 != i and nums[j] == nums[j - 1]:  # avoid pick the same second number
+                    continue
+                left = j + 1
+                right = len(nums) - 1
+                while left < right:
+                    curSum = nums[i] + nums[j] + nums[left] + nums[right]
+                    curList = [nums[i], nums[j], nums[left], nums[right]]
+                    if curSum == target:
+                        res.append(curList)
+                        while left < right and nums[left] == nums[left + 1]:
+                            left += 1
+                        while left < right and nums[right] == nums[right - 1]:
+                            right -= 1
+                        left += 1
+                        right -= 1
+                    elif curSum > target:
+                        right -= 1
+                    else:
+                        left += 1
+        return res
