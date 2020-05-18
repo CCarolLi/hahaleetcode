@@ -1,0 +1,64 @@
+5.17.20 // Q 31 (Array), 46 (Backtracking)
+swap in one line: nums[left], nums[right] = nums[right], nums[left] 
+append list to list with deep copy: self.res.append(curList[:])
+
+
+31. Next Permutation
+class Solution(object):
+    def nextPermutation(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: None Do not return anything, modify nums in-place instead.
+        """
+        replace = len(nums) - 2
+        while replace >= 0:
+            if nums[replace] < nums[replace + 1]:
+                break
+            replace -= 1
+        # replace is the first index at which the number is not ordered in descending order
+        if replace < 0:
+            # already the largest permutation
+            self.reverse(nums, 0, len(nums) - 1)
+            return
+        swap = replace + 1
+        while swap < len(nums):
+            if nums[swap] > nums[replace]:
+                swap += 1
+            else:
+                break
+        swap -= 1
+        nums[swap], nums[replace] = nums[replace], nums[swap]
+        self.reverse(nums, replace + 1, len(nums) - 1)
+        
+    def reverse(self, nums, left, right):
+        while left < right:
+            nums[left], nums[right] = nums[right], nums[left]
+            left += 1
+            right -= 1
+           
+           
+46. Permutations
+class Solution(object):
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        self.res = []
+        if not nums or len(nums) == 0:
+            return []
+        self.helper(nums, [])
+        return self.res
+        
+    def helper(self, nums, curList):
+        if len(curList) == len(nums):
+            # full
+            self.res.append(curList[:])
+            return 
+        for i in range(len(nums)):
+            if nums[i] in curList:
+                continue
+            curList.append(nums[i])
+            self.helper(nums, curList)
+            curList.remove(curList[len(curList) - 1])
+
