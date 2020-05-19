@@ -1,4 +1,6 @@
-5.18.20 // Q 75 (Two Pointers)
+5.18.20 // Q 75, 88 (Two Pointers)
+- copy first n elements from nums2 to nums1:
+nums1[:n] = nums2[:n]
 
 
 75. Sort Colors
@@ -31,3 +33,27 @@ class Solution(object):
                 # move 2 to the sorted part
                 nums[cur], nums[last] = nums[last], nums[cur]
                 last -= 1
+
+
+88. Merge Sorted Array
+class Solution(object):
+    def merge(self, nums1, m, nums2, n):
+        """
+        :type nums1: List[int]
+        :type m: int
+        :type nums2: List[int]
+        :type n: int
+        :rtype: None Do not return anything, modify nums1 in-place instead.
+        """
+        # two pointers
+        # start from larger elements
+        while m > 0 and n > 0:
+            if nums1[m - 1] < nums2[n - 1]:
+                nums1[m - 1 + n] = nums2[n - 1]
+                n -= 1
+            else:
+                nums1[m - 1 + n], nums1[m - 1] = nums1[m - 1], nums1[m - 1 + n]
+                m -= 1
+        if m == 0 and n > 0:
+            # special case where all the numbers in nums2 is larger than nums1
+            nums1[:n] = nums2[:n]
