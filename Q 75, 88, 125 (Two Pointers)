@@ -1,7 +1,8 @@
-5.18.20 // Q 75, 88 (Two Pointers)
+5.18.20 // Q 75, 88, 125 (Two Pointers)
 - copy first n elements from nums2 to nums1:
 nums1[:n] = nums2[:n]
-
+- check whether a char is a (number or alphabet)
+s[first].isalnum()
 
 75. Sort Colors
 class Solution(object):
@@ -57,3 +58,27 @@ class Solution(object):
         if m == 0 and n > 0:
             # special case where all the numbers in nums2 is larger than nums1
             nums1[:n] = nums2[:n]
+
+125. Valid Palindrome
+class Solution(object):
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        # two pointers
+        s = s.lower()
+        first, last = 0, len(s) - 1
+        while first < last:
+            while first < last and not s[first].isalnum():
+                first += 1
+            while first < last and not s[last].isalnum():
+                last -= 1
+            # if first >= last:
+            #     return True
+            if s[first] == s[last]:
+                first += 1
+                last -= 1
+            else:
+                return False
+        return True
