@@ -1,0 +1,33 @@
+5.18.20 // Q 75 (Two Pointers)
+
+
+75. Sort Colors
+class Solution(object):
+    def sortColors(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: None Do not return anything, modify nums in-place instead.
+        """
+        # Two Pointers - 3 pointers actually
+        first, last = 0, len(nums) - 1
+        # initialize first and last to exclude sorted part
+        while first < len(nums) and nums[first] == 0:
+            first += 1
+        while last >= 0 and nums[last] == 2:
+            last -= 1
+        cur = first
+        while cur <= last:
+            # case [2,0,1] requires cur == last
+            if nums[cur] == 0:
+                # swap with first to move 0 to the sorted part
+                nums[first], nums[cur] = nums[cur], nums[first]
+                first += 1
+                cur += 1
+            elif nums[cur] == 1:
+                # 1 should be after first pointer and do not change first pointer
+                cur += 1
+            elif nums[cur] == 2:
+                # swap with last
+                # move 2 to the sorted part
+                nums[cur], nums[last] = nums[last], nums[cur]
+                last -= 1
