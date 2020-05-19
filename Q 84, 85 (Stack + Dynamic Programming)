@@ -1,4 +1,4 @@
-5.18.2020 // Q 84 (Stack + Dynamic Programming)
+5.18.2020 // Q 84, 85 (Stack + Dynamic Programming)
 - for loop decreasing:
 for j in range(i, -1, -1):
 
@@ -32,3 +32,6 @@ class Solution(object):
 
 Solution 2: Stack O(n)
 https://www.youtube.com/watch?v=KkJrGxuQtYo
+
+
+85. --
