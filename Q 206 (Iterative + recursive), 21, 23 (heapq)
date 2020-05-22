@@ -1,4 +1,16 @@
-5.21.2020 // Q 206 (Iterative + recursive), 21, 23
+5.21.2020 // Q 206 (Iterative + recursive), 21, 23 (heapq)
+
+- heapq.heappush(heap, (node.val, node))
+- curNode = heapq.heappop(heap)[1]
+
+heapq.heappush(heap, item)
+Push the value item onto the heap, maintaining the heap invariant.
+
+heapq.heappop(heap)
+Pop and return the smallest item from the heap, maintaining the heap invariant. If the heap is empty, IndexError is raised. To access the smallest item without popping it, use heap[0].
+
+
+
 
 206. Reverse Linked List
 # Definition for singly-linked list.
@@ -92,3 +104,32 @@ class Solution(object):
         
         
 23. Merge k Sorted Lists
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def mergeKLists(self, lists):
+        """
+        :type lists: List[ListNode]
+        :rtype: ListNode
+        """
+        # heapq.heappush(heap, item)
+        # Push the value item onto the heap, 
+        # maintaining the heap invariant.
+        if not lists:
+            return None
+        heap = []
+        for node in lists:
+            if node:
+                heapq.heappush(heap, (node.val, node))
+        dummy = ListNode()
+        prev = dummy
+        while heap:
+            curNode = heapq.heappop(heap)[1]
+            prev.next = curNode
+            prev = prev.next
+            if curNode.next:
+                heapq.heappush(heap, (curNode.next.val, curNode.next))
+        return dummy.next
