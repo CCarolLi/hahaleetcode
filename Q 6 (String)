@@ -1,0 +1,30 @@
+5.22.2020 // Q 6 (String)
+- stringbuilder = [[] for i in range(numRows)]
+
+
+6. ZigZag Conversion
+class Solution(object):
+    def convert(self, s, numRows):
+        """
+        :type s: str
+        :type numRows: int
+        :rtype: str
+        """
+        if not s or len(s) == 0 or numRows == 0:
+            return ""
+        stringbuilder, i, res = [[] for i in range(numRows)], 0, ""
+        while i < len(s):
+            index = 0
+            while index < numRows and i < len(s):
+                stringbuilder[index].append(s[i])
+                index += 1
+                i += 1
+            index -= 2
+            while index >= 1 and i < len(s):  # stop at 1 because the next index will start at 0 again
+                stringbuilder[index].append(s[i])
+                index -= 1
+                i += 1
+        for i in range(len(stringbuilder)):
+            for j in range(len(stringbuilder[i])):  # each rows has different length
+                res += stringbuilder[i][j]
+        return res
