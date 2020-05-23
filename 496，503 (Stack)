@@ -1,0 +1,42 @@
+5.22.2020  // 496， 503 (Stack)
+- stack = []
+- stack.pop(), stack.append()
+- (peak): s[-1]
+
+- for i in range(len(nums)) * 2:  # do 2 for loops 
+
+496. Next Greater Element I
+class Solution(object):
+    def nextGreaterElement(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: List[int]
+        """
+        nextGreater, res, s = {}, [], []
+        for num in nums2:
+            while len(s) != 0 and num > s[-1]:
+                nextGreater[s.pop()] = num
+            s.append(num)
+        
+        for num in nums1:
+            res.append(nextGreater.get(num, -1))
+        return res
+ 
+ 
+503. Next Greater Element II
+class Solution(object):
+    def nextGreaterElements(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        if not nums or len(nums) == 0:
+            return []
+        res, stack = [-1] * len(nums), []
+        for i in range(len(nums)) * 2:  # do 2 for loops 
+            cur = nums[i]
+            while stack and cur > nums[stack[-1]]:
+                res[stack.pop()] = nums[i]
+            stack.append(i)  # stack stores the index instead of the element
+        return res
