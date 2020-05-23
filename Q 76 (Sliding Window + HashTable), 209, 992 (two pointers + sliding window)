@@ -1,4 +1,4 @@
-5.23.2020 // Q 76 (Sliding Window + HashTable)
+5.23.2020 // Q 76 (Sliding Window + HashTable), 209, 992 (two pointers + sliding window)
 -  collections.defaultdict(int): the default "value" is int = 0
 - if collections.defaultdict(list): we can do append without initializing
 
@@ -44,3 +44,27 @@ class Solution(object):
             else:
                 start += 1
         return start
+
+
+209. Minimum Size Subarray Sum
+class Solution(object):
+    def minSubArrayLen(self, s, nums):
+        """
+        :type s: int
+        :type nums: List[int]
+        :rtype: int
+        """
+        # two pointers
+        res, left, right, curSum = 0, 0, 0, 0
+        while right < len(nums):
+            cur = nums[right]
+            curSum += cur
+            while left < len(nums) and curSum >= s:
+                # move left pointer
+                if res == 0 or right - left + 1 < res:
+                    res = right - left + 1
+                curSum -= nums[left]
+                left += 1
+            # move right pointer
+            right += 1
+        return res
