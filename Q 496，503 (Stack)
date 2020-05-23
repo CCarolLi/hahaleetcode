@@ -1,4 +1,4 @@
-5.22.2020  // 496， 503 (Stack)
+5.22.2020  // Q 496，503 (Stack)
 - stack = []
 - stack.pop(), stack.append()
 - (peak): s[-1]
