@@ -1,0 +1,46 @@
+5.23.2020 // Q 76 (Sliding Window + HashTable)
+-  collections.defaultdict(int): the default "value" is int = 0
+- if collections.defaultdict(list): we can do append without initializing
+
+76. Minimum Window Substring
+class Solution(object):
+    def minWindow(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: str
+        """
+        # collections.defaultdict(int): the default "value" is int = 0
+        # if collections.defaultdict(list): we can do append without initializing
+        res, sdict, tdict = "", collections.defaultdict(int), collections.defaultdict(int)
+        for char in t:
+            tdict[char] += 1
+        left = self.findNextIndex(0, s, t)
+        if left == len(s):
+            return ""  # not exist
+        right = left
+        countMatch = 0
+        while right < len(s):
+            curChar = s[right]
+            if sdict[curChar] < tdict[curChar]: # one more match
+                countMatch += 1
+            sdict[curChar] += 1
+            while left < len(s) and countMatch == len(t):
+                # move left pointer to contract the length of res
+                if len(res) == 0 or len(res) > right - left + 1:
+                    # update res
+                    res = s[left : right + 1]
+                if sdict[s[left]] <= tdict[s[left]]:
+                    countMatch -= 1
+                sdict[s[left]] -= 1
+                left = self.findNextIndex(left + 1, s, t)
+            right = self.findNextIndex(right + 1, s, t)
+        return res
+        
+    def findNextIndex(self, start, s, t):
+        while start < len(s):
+            if s[start] in t:
+                return start
+            else:
+                start += 1
+        return start
