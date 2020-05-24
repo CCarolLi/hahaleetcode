@@ -1,0 +1,28 @@
+5.23.2020 // Q 22 (backtracking)
+- generate all possibilities - backtracking
+
+
+22. Generate Parentheses
+class Solution(object):
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        # generate all possibilities - backtracking
+        if n == 0:
+            return []
+        res = []
+        self.backtracking(res, 0, 0, "", n)
+        return res
+        
+    def backtracking(self, res, left, right, cur, n):
+        if left == right == n:
+            res.append(cur[:])
+            return
+        if right > left:
+            return  # invalid
+        if right > n  or left > n:
+            return
+        self.backtracking(res, left + 1, right, cur + '(', n)
+        self.backtracking(res, left, right + 1, cur + ')', n)
