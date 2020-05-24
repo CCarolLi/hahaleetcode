@@ -1,0 +1,32 @@
+5.23.2020 // Q 19 (Two pointers + Linked List)
+- return dummyNode.next
+- dummyNode can also prevent the situation when we want to use fast = fast.next and fast is null
+
+19. Remove Nth Node From End of List
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def removeNthFromEnd(self, head, n):
+        """
+        :type head: ListNode
+        :type n: int
+        :rtype: ListNode
+        """
+        # two pointers
+        if not head:
+            return None
+        dummyNode = ListNode(0)
+        dummyNode.next = head
+        fast, slow = dummyNode, dummyNode  # start from dummyNode can solve the case: [1], 1
+        for i in range(n + 1):
+            # now fast and slow will be apart by n+1
+            fast = fast.next
+        while fast:
+            fast = fast.next
+            slow = slow.next
+        # now slow point to the N+1th Node from end of the list
+        slow.next = slow.next.next
+        return dummyNode.next
