@@ -1,0 +1,27 @@
+5.23.2020 // Q 581 (stack)
+
+
+581. Shortest Unsorted Continuous Subarray
+class Solution(object):
+    def findUnsortedSubarray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # stack
+        left, right = float('inf'), float('-inf')
+        stack = []
+        for i in range(len(nums)):
+            while len(stack) > 0 and nums[i] < nums[stack[-1]]:
+                # unsorted element here, but we need to keep the smallest left index
+                # when we see another unsorted part later in the array
+                left = min(stack.pop(), left)
+            stack.append(i)
+        stack = []
+        for j in range(len(nums) - 1, -1, -1):
+            while len(stack) > 0 and nums[j] > nums[stack[-1]]:
+                right = max(stack.pop(), right)
+            stack.append(j)
+        if right >= left:
+            return right - left + 1
+        return 0
