@@ -1,0 +1,26 @@
+5.24.2020 // Q 53 (Greedy)
+
+
+53. Maximum Subarray
+class Solution(object):
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+        if max(nums) <= 0:
+            return max(nums)
+        
+        res, curSum = 0, 0
+        # greedy
+        for num in nums:
+            if curSum + num <= 0:
+                # do not take it and swip out all the previous numbers
+                # because this num will have negative effect on the curSum
+                curSum = 0
+            else:
+                curSum += num
+                res = max(res, curSum)
+        return res
