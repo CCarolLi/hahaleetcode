@@ -1,0 +1,67 @@
+5.24.2020 // Q 617 (DFS + Tree)
+- DFS - Recursion Stack
+- BFS - Queue
+
+
+617. Merge Two Binary Trees
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def mergeTrees(self, t1, t2):
+        """
+        :type t1: TreeNode
+        :type t2: TreeNode
+        :rtype: TreeNode
+        """
+        # DFS
+        if not t1:
+            return t2
+        if not t2:
+            return t1
+        return self.dfs(t1, t2)
+    
+    def dfs(self, t1, t2):
+        if not t1 and not t2:
+            return None
+        if not t1:
+            return t2
+        if not t2:
+            return t1
+        curNode = TreeNode(t1.val + t2.val)
+        curNode.left = self.dfs(t1.left, t2.left)
+        curNode.right = self.dfs(t1.right, t2.right)
+        return curNode
+
+
+226. Invert Binary Tree
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def invertTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        # DFS
+        if not root:
+            return None
+        root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
+        return root
+    '''
+    Case analyse:
+    Node 2, Node 7 = f(Node 7), f(Node 2)
+                        |
+                        Node 6, Node 9 = f(Node 9), f(Node 6)
+                                            |--return Node 9 (the same for other nodes)
+                                            Node None, Node None = f(None), f(None)
+                                                                      |         |
+                                                                      None      None
+      '''
