@@ -1,4 +1,4 @@
-5.24.2020 // Q 53 (Greedy)
+5.24.2020 // Q 53, 121 (Greedy)
 
 
 53. Maximum Subarray
@@ -23,4 +23,22 @@ class Solution(object):
             else:
                 curSum += num
                 res = max(res, curSum)
+        return res
+
+
+121. Best Time to Buy and Sell Stock
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        if not prices:
+            return 0
+        res, curMin = 0, float('inf')
+        for price in prices:
+            curMin = min(curMin, price)  # when prices[0], curMin will become prices[0]
+            # price - curMin will be the max profit selling at current date
+            # keep updating the max profit
+            res = max(res, price - curMin)
         return res
