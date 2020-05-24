@@ -2,6 +2,9 @@
 -  collections.defaultdict(int): the default "value" is int = 0
 - if collections.defaultdict(list): we can do append without initializing
 
+- counter = collections.Counter()
+it is a kind of dictionary with value to be integers
+
 76. Minimum Window Substring
 class Solution(object):
     def minWindow(self, s, t):
@@ -68,3 +71,44 @@ class Solution(object):
             # move right pointer
             right += 1
         return res
+
+
+992. Subarrays with K Different Integers
+class Solution(object):
+    def subarraysWithKDistinct(self, A, K):
+        """
+        :type A: List[int]
+        :type K: int
+        :rtype: int
+        """
+        # 340. Longest Substring with At Most K Distinct Characters 
+        # (Sliding Window + Counter) 20.5.23 Hard
+        # atMost(A, K) - atMost(A, K-1)
+        
+        return self.atMost(A, K) - self.atMost(A, K - 1)
+    
+    def atMost(self, A, K):
+        counter = collections.Counter()
+        # for num in A:
+        #     counter[num] += 1
+        res, start = 0, 0
+        
+        for j in range(len(A)):
+            cur = A[j]
+            if cur not in counter or counter[cur] == 0:
+                # one more unique number
+                K -= 1
+            counter[cur] += 1
+            while K < 0:
+                # move start pointer
+                counter[A[start]] -= 1
+                if counter[A[start]] == 0:
+                    K += 1
+                start += 1
+            res += j - start + 1
+            # at eaach loop, we introduct a new number into the subarrays
+            # and these new subarrayas all end at j
+            # so the total number of new subarrays will be j - start + 1
+            
+        return res
+    
