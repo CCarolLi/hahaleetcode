@@ -1,0 +1,26 @@
+5.24.2020 // Q 169 (lambda function with max())
+
+
+O(n)
+169. Majority Element
+class Solution(object):
+    def majorityElement(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # key = func
+        count = collections.Counter(nums)
+        return max(count.keys(), key = lambda k: count.get(k))
+        # return max(count, key = lambda k: count.get(k))
+        # return max(count.keys(), key = count.get())
+        
+        
+O(nlog(n))       
+class Solution(object):
+    def majorityElement(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        return sorted(nums)[len(nums) / 2]
