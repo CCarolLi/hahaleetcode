@@ -1,4 +1,4 @@
-5.23.2020 // Q 19 (Two pointers + Linked List)
+5.23.2020 // Q 19, 234 (Two pointers + Linked List)
 - return dummyNode.next
 - dummyNode can also prevent the situation when we want to use fast = fast.next and fast is null
 
@@ -30,3 +30,35 @@ class Solution(object):
         # now slow point to the N+1th Node from end of the list
         slow.next = slow.next.next
         return dummyNode.next
+
+
+234. Palindrome Linked List
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def isPalindrome(self, head):
+        """
+        :type head: ListNode
+        :rtype: bool
+        """
+        # two pointers
+        if not head or head.next == None:
+            return True
+        slow, fast = head, head
+        stack = []
+        while fast and fast.next:
+            stack.append(slow)
+            fast = fast.next.next
+            slow = slow.next
+        if fast:
+            # odd length panlindrom
+            # ignore the unique number at the center
+            slow = slow.next
+        while slow:
+            if slow.val != stack.pop().val:
+                return False
+            slow = slow.next
+        return True
