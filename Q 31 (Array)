@@ -1,4 +1,4 @@
-5.17.20 // Q 31 (Array), 46 (Backtracking)
+5.17.20 // Q 31 (Array)
 swap in one line: nums[left], nums[right] = nums[right], nums[left] 
 append list to list with deep copy: self.res.append(curList[:])
 
@@ -35,30 +35,3 @@ class Solution(object):
             nums[left], nums[right] = nums[right], nums[left]
             left += 1
             right -= 1
-           
-           
-46. Permutations
-class Solution(object):
-    def permute(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
-        self.res = []
-        if not nums or len(nums) == 0:
-            return []
-        self.helper(nums, [])
-        return self.res
-        
-    def helper(self, nums, curList):
-        if len(curList) == len(nums):
-            # full
-            self.res.append(curList[:])
-            return 
-        for i in range(len(nums)):
-            if nums[i] in curList:
-                continue
-            curList.append(nums[i])
-            self.helper(nums, curList)
-            curList.remove(curList[len(curList) - 1])
-
