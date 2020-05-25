@@ -1,5 +1,5 @@
-5.24.2020 // Q 160 (Two pointers)
-
+5.24.2020 // Q 160 (Two pointers + HashTable)
+- hashtable {} has better time complexity O(1) than list [] O(n) when we want to do if x in y
 
 # Definition for singly-linked list.
 # class ListNode(object):
@@ -33,3 +33,26 @@ class Solution(object):
         return pa
     
     
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def getIntersectionNode(self, headA, headB):
+        """
+        :type head1, head1: ListNode
+        :rtype: ListNode
+        """
+        # we do not use list here because hashtable{} has better time complexity O(1) when we do if pb in l
+        l = {}
+        pa, pb = headA, headB
+        while pa != None:
+            l[pa] = 0
+            pa = pa.next
+        while pb != None:
+            if pb in l:
+                return pb
+            pb = pb.next
+        return None
