@@ -1,0 +1,35 @@
+5.24.2020 // Q 160 (Two pointers)
+
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution(object):
+    def getIntersectionNode(self, headA, headB):
+        """
+        :type head1, head1: ListNode
+        :rtype: ListNode
+        """
+        
+        '''
+        In the second iteration, the pointer pA and pB must meet for the reason below:
+        in the first iteration, pA is asked to travel L1 + Lc where L1 is the distance between headA and intersection         point, LC is the distance
+        from the intersection point to the end of A linked list,
+        and pB is asked to travel L2 + Lc, where Lc is the common part A linked list and linkned list both share.
+        For the second iteration, pA is asked to travel L2, and pB is asked to travel L1,
+        so, they will travel exact the same distance before they meet each other at the intersection point
+        '''
+        
+        '''
+        if no intersection, pa and pb will end both at None and they are equal
+        '''
+        pa, pb = headA, headB
+        while pa != pb:
+            pa = headB if pa == None else pa.next
+            pb = headA if pb == None else pb.next
+        return pa
+    
+    
