@@ -1,0 +1,61 @@
+5.17.2020 // Q 46 (Array, Backtracking)
+5.25.2020 // Q 78 (Array, Backtracking)
+- append list to list with deep copy: self.res.append(curList[:])
+
+- backtracking:
+'''
+通过分析之后，得出了每一步递归需要做的事情：
+1. clist -> res
+2. 从可用的中选一个，并且update clist
+3. call the function
+4. remove the element for recrusion purpose
+'''
+  
+
+46. Permutations
+class Solution(object):
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        self.res = []
+        if not nums or len(nums) == 0:
+            return []
+        self.helper(nums, [])
+        return self.res
+        
+    def helper(self, nums, curList):
+        if len(curList) == len(nums):
+            # full
+            self.res.append(curList[:])
+            return 
+        for i in range(len(nums)):
+            if nums[i] in curList:
+                continue
+            curList.append(nums[i])
+            self.helper(nums, curList)
+            curList.remove(curList[len(curList) - 1])
+
+
+78. Subsets
+class Solution(object):
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        # backtracking
+        if not nums:
+            return []
+        res = []
+        self.backtracking(sorted(nums), 0, [], res)  # not necessary to sort nums
+        return res
+        
+    def backtracking(self, nums, index, path, res):
+        res.append(path[:])  # deep copy the current list
+        for i in range(index, len(nums)):  # Use a for loop to get every possible result, 从可用的中选一个，并且update clist
+            self.backtracking(nums, i + 1, path + [nums[i]], res)
+            # path.append(nums[i])
+            # self.backtracking(nums, i + 1, path, res)
+            # path.pop()  # pop: remove the element for recrusion purpose
