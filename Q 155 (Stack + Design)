@@ -1,0 +1,55 @@
+5.24.2020 // Q 155 (Stack + Design)
+- get the min of the stack in constant time:
+store the curMin when we push a number into the stack
+
+if we store curMin as another variable, then we cannot update it when we do pop
+
+155. Min Stack
+class MinStack(object):
+
+    def __init__(self):
+        """
+        initialize your data structure here.
+        """
+        self.stack = []
+
+    def push(self, x):
+        """
+        :type x: int
+        :rtype: None
+        """
+        # store the current minimum number as the tuple[1]
+        # so that we can keep updating it when we want to push a number in
+        curMin = x
+        if len(self.stack) != 0 and x > self.stack[-1][1]:
+            curMin = self.stack[-1][1]
+        self.stack.append((x, curMin))
+
+    def pop(self):
+        """
+        :rtype: None
+        """
+        self.stack.pop()
+
+    def top(self):
+        """
+        :rtype: int
+        """
+        if len(self.stack) == 0:
+            return None
+        else:
+            return self.stack[-1][0]
+
+    def getMin(self):
+        """
+        :rtype: int
+        """
+        return self.stack[-1][1]
+
+
+# Your MinStack object will be instantiated and called as such:
+# obj = MinStack()
+# obj.push(x)
+# obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.getMin()
