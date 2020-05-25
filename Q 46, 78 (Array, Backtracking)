@@ -1,5 +1,5 @@
 5.17.2020 // Q 46 (Array, Backtracking)
-5.25.2020 // Q 78 (Array, Backtracking)
+5.25.2020 // Q 78, 39 (Array, Backtracking)
 - append list to list with deep copy: self.res.append(curList[:])
 
 - backtracking:
@@ -59,3 +59,34 @@ class Solution(object):
             # path.append(nums[i])
             # self.backtracking(nums, i + 1, path, res)
             # path.pop()  # pop: remove the element for recrusion purpose
+
+
+39. Combination Sum
+class Solution(object):
+    def combinationSum(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        # backtracking: find all the possibilities, traverse the tree
+        if not candidates:
+            return []
+        
+        res = []
+        self.backtracking(candidates, target, [], res, 0)
+        return res
+        
+    def backtracking(self, candidates, target, curList, res, index):
+        if target == 0:
+            # find the matched candidates
+            res.append(curList[:])
+            return
+        if target < 0:
+            return
+        for i in range(index, len(candidates)):
+            if candidates[i] <= target:
+                self.backtracking(candidates, target - candidates[i], curList + [candidates[i]], res, i)
+                # we pass in index i again so that it can choose candidates[i] again
+                # if we do not use index and loop through the whole candidates, there will be duplicate curList
+
