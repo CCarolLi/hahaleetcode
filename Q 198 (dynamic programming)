@@ -1,0 +1,37 @@
+5.24.2020 // Q 198 (dynamic programming)
+
+'''
+4 steps for DP problem:--------- 当前状态是与之前的状态有关的，或者是由之前的状态直接得到的！！！！！！
+-------------------------------- Instead of getting the exact house getting robbed, the question only asks us the total money/ T&F => DP
+1. Status variable: for each house, we have 2 choices: rob or not rob,
+                    so, we define two status variable: two list:
+                    if we rob the current house, the maximum money we can get: r[n]
+                    if we do not rob the current house , the maximum money we can get: nr[n]
+2. Init: r[0] = nums[0], nr[0] = 0
+3. Transformation: r[i] = nr[i - 1] + nums[i], since if we want to rob this house, we cannot rob the previous house,
+                   and the nr[i - 1] by definition, is the maximum money that we do no rob the previous house,
+                   so, we just add them up.
+                   nr[i] = max(r[i - 1], nr[i - 1]), as for nr[i], things are a little more tricky,
+                   since we can choose to rob the previous house and  we can choose not to rob the previous house,
+                   so, we just take their maximum, the larger one.
+                   As for the r[i], it has no choices like this, since, if we choose to rob the current house,
+                   there is no way for us to define robbing the previous house as a option, 
+                   we have only one choice: not rob the previous house, which is nr[i - 1]
+4. Return: return the larger value out of r[n] and nr[n]
+'''
+
+198. House Robber
+class Solution(object):
+    def rob(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+        r, nr = [0]*len(nums), [0]*len(nums)
+        r[0], nr[0] = nums[0], 0
+        for i in range(1, len(nums)):
+            r[i] = max(r[i - 1], nr[i - 1] + nums[i])
+            nr[i] = max(r[i-1], nr[i-1])
+        return max(r[-1], nr[-1])
