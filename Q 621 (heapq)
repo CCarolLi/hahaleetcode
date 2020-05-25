@@ -1,0 +1,45 @@
+5.25.2020 // Q 621 (heapq)
+- heap is a list, and we use heapq.heappop() and heappush()
+- heapq.heappush(heap, (-1 * time, task))  # use -1 * time to get the most frequent tasks
+
+621. Task Scheduler
+
+class Solution(object):
+    def leastInterval(self, tasks, n):
+        """
+        :type tasks: List[str]
+        :type n: int
+        :rtype: int
+        """
+        # n - between two same tasks, at least n intervals between two same tasks
+        # least # of intervals to finish the tasks
+        
+        # algorithm: prioritze the most frequent tasks and do idle when no tasks available
+        # use a heap to get the most frequent tasks
+        if not tasks:
+            return 0
+        
+        res, heap = 0, []  # heap is a list, and we use heapq.heappop() and heappush()
+        for task, time in collections.Counter(tasks).items():
+            heapq.heappush(heap, (-1 * time, task))
+        
+        while heap:
+            timer, waitlist = 0, []
+            while timer <= n:
+                res += 1  # time + 1
+                if heap:
+                    # if not heap, we just increase the timer and it is idle time
+                    negatime, task = heapq.heappop(heap)
+                    if negatime != -1:
+                        # still need to do this task
+                        waitlist.append((negatime + 1, task))
+                if not heap and not waitlist:
+                    break
+                else:
+                    # heap is not none or waitlist is not none
+                    # continue the loop
+                    timer += 1
+            # after cooling interval, we can consider the tasks in waitlist again
+            for l in waitlist:
+                heapq.heappush(heap, l)
+        return res
