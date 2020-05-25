@@ -1,7 +1,5 @@
 5.17.20 // Q 31 (Array)
 swap in one line: nums[left], nums[right] = nums[right], nums[left] 
-append list to list with deep copy: self.res.append(curList[:])
-
 
 31. Next Permutation
 class Solution(object):
