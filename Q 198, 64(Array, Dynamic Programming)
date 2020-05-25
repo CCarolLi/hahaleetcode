@@ -1,5 +1,5 @@
 5.24.2020 // Q 198 (Array, Dynamic Programming)
-5.25.2020 // Q 64
+5.25.2020 // Q 64, 62
 
 '''
 4 steps for DP problem:--------- 当前状态是与之前的状态有关的，或者是由之前的状态直接得到的！！！！！！
@@ -84,4 +84,29 @@ class Solution(object):
             for j in range(1, len(grid[0])):
                 # add left or add up
                 dp[i][j] = grid[i][j] + min(dp[i - 1][j], dp[i][j - 1])
+        return dp[-1][-1]
+
+
+62. Unique Paths
+class Solution(object):
+    def uniquePaths(self, m, n):
+        """
+        :type m: int
+        :type n: int
+        :rtype: int
+        """
+        if m == 0 and n == 0:
+            return 0
+        m, n = n, m  # as shown in pic, m * n grid is actually n * m
+        dp = [[0 for j in range(n)] for i in range(m)]
+        dp[0][0] = 1
+        for x in range(1, m):
+            dp[x][0] = 1
+        for y in range(1, n):
+            dp[0][y] = 1   # since only right or down direction, there is only one way to get these positions
+           
+        # for grid[i][j], there are two ways to get here: up or left, so we just add the dp from up and left
+        for i in range(1, m):
+            for j in range(1, n):
+                dp[i][j] = dp[i-1][j] + dp[i][j-1]
         return dp[-1][-1]
