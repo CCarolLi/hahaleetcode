@@ -1,5 +1,6 @@
 5.24.2020 // Q 53, 121 (Greedy)
-
+5.25.2020 // Q 152
+- python can use max(i1, i2, i3)
 
 53. Maximum Subarray
 class Solution(object):
@@ -23,6 +24,27 @@ class Solution(object):
             else:
                 curSum += num
                 res = max(res, curSum)
+        return res
+        
+        
+152. Maximum Product Subarray
+class Solution(object):
+    def maxProduct(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # dynamic programming - current state is related to previous states
+        
+        if not nums:
+            return 0
+        
+        # minp to deal with the negative times negative becomes positive
+        minp, maxp, res = nums[0], nums[0], nums[0]
+        for i in range(1, len(nums)):
+            # must be one line because we change the value of minp and it affects the value of maxp
+            minp, maxp = min(nums[i], nums[i] * maxp, nums[i] * minp), max(nums[i], nums[i] * maxp, nums[i] * minp)
+            res = max(res, maxp)  # res might be from very first, so we cannot just return max(maxp, minp)
         return res
 
 
