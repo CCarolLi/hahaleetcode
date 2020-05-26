@@ -1,0 +1,58 @@
+5.26.2020 // Q 347 (Heapq, Hashtable, sorted by lambda)
+- Counter is ordered but Counter.items() is unordered
+- heapq.heappop(pq)  # pop the least frequent number
+counter = sorted(counter, key = lambda x : -x[1])
+
+
+347. Top K Frequent Elements
+Solution 1:
+class Solution(object):
+    def topKFrequent(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        # time complexity > O(n log n)
+        # Hashtable + heapq
+        # O(nlogk) T, O(n) S
+        if not nums or len(nums) == 0:
+            return []
+        
+        res = []
+        counter = collections.Counter(nums)
+        # Counter is ordered but Counter.items() is unordered
+        
+        pq = []
+        for num in set(nums):
+            heapq.heappush(pq, (counter[num], num))
+            if len(pq) > k:
+                heapq.heappop(pq)  # pop the least frequent number
+        print(pq)
+        for item in pq:
+            res.append(item[1])
+        return res
+       
+       
+Solution 2:
+class Solution(object):
+    def topKFrequent(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        # time complexity > O(n log n)
+        # Hashtable + sort by lambda
+        # O(nlogn) T, O(n) S
+        if not nums or len(nums) == 0:
+            return []
+        
+        res = []
+        counter = collections.Counter(nums).items()
+        # Counter is ordered but Counter.items() is unordered
+        
+        counter = sorted(counter, key = lambda x : -x[1])
+        for i in range(k):
+            res.append(counter[i][0])
+        return res
