@@ -42,7 +42,8 @@ class Solution(object):
         # minp to deal with the negative times negative becomes positive
         minp, maxp, res = nums[0], nums[0], nums[0]
         for i in range(1, len(nums)):
-            # must be one line because we change the value of minp and it affects the value of maxp
+            # must be one line because we change the value of minp and it affects the value of 
+            # if maxp becomes nums[i], that means we ignore all the previous product, and restart from current index
             minp, maxp = min(nums[i], nums[i] * maxp, nums[i] * minp), max(nums[i], nums[i] * maxp, nums[i] * minp)
             res = max(res, maxp)  # res might be from very first, so we cannot just return max(maxp, minp)
         return res
