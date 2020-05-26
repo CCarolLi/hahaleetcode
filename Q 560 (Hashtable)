@@ -1,0 +1,30 @@
+5.25.2020 // Q 560 (Hashtable)
+- not to get all the possibilities, just the number of possibilities, so not necessary backtracking
+- if curSum - k exists, then k also exist, and those paths will end at current num
+
+560. Subarray Sum Equals K
+
+class Solution(object):
+    def subarraySum(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        
+        # not to get all the possibilities, just the number of possibilities
+        # so not necessary backtracking
+        
+        # hashtable
+        res, hashtable, curSum = 0, collections.defaultdict(int), 0
+        hashtable[0] = 1  # when currsum == k, there is one subarray until current index
+        
+        for num in nums:
+            curSum += num
+            if curSum - k in hashtable:
+                # if curSum - k exists, then k also exist, and those paths will end at current num
+                # add the frequency to res
+                res += hashtable[curSum - k]
+            # update the frequency (all the sums in hashtable exist in the array)
+            hashtable[curSum] += 1
+        return res
