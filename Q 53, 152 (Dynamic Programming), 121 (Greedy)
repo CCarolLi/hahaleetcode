@@ -1,5 +1,5 @@
 5.24.2020 // Q 53, 121 (Greedy)
-5.25.2020 // Q 152
+5.25.2020 // Q 152  (Dynamic Programming, similar to 53 but more complicated)
 - python can use max(i1, i2, i3)
 
 53. Maximum Subarray
