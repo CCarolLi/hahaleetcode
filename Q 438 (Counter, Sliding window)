@@ -1,0 +1,24 @@
+5.26.2020 // Q 438 (Counter, Sliding window)
+- for sliding window, we maintain a window of size of the expected res length, 
+then include and then remove the newest and oldest element
+
+
+438. Find All Anagrams in a String
+class Solution(object):
+    def findAnagrams(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: List[int]
+        """
+        # sliding window with Counter
+        res = []
+        scounter, pcounter = collections.Counter(s[:len(p) - 1]), collections.Counter(p)  # hashtable 
+        for i in range(len(p) - 1, len(s)):  # sliding window in and out, Maintain a window of len(p) in s, and slide to right until finish
+            scounter[s[i]] += 1  # include a new char in the window
+            if scounter == pcounter:
+                res.append(i - len(p) + 1)
+            scounter[s[i - len(p) + 1]] -= 1  # decrease the count of oldest char in the window
+            if scounter[s[i - len(p) + 1]] == 0:  # delete element from hashtable
+                del scounter[s[i - len(p) + 1]]
+        return res
