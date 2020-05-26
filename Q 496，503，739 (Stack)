@@ -6,7 +6,7 @@
 
 - for i in range(len(nums)) * 2:  # do 2 for loops 
 
--for i, value in enumerate(T):
+- for i, value in enumerate(T):
 
 496. Next Greater Element I
 class Solution(object):
