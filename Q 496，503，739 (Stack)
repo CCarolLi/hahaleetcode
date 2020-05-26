@@ -1,9 +1,12 @@
 5.22.2020  // Q 496，503 (Stack)
+5.26.2020 // Q 739 
 - stack = []
 - stack.pop(), stack.append()
 - (peak): s[-1]
 
 - for i in range(len(nums)) * 2:  # do 2 for loops 
+
+-for i, value in enumerate(T):
 
 496. Next Greater Element I
 class Solution(object):
@@ -39,4 +42,25 @@ class Solution(object):
             while stack and cur > nums[stack[-1]]:
                 res[stack.pop()] = nums[i]
             stack.append(i)  # stack stores the index instead of the element
+        return res
+
+
+739. Daily Temperatures
+class Solution(object):
+    def dailyTemperatures(self, T):
+        """
+        :type T: List[int]
+        :rtype: List[int]
+        """
+        # stack
+        if not T or len(T) == 0:
+            return []
+        res = [0 for i in range(len(T))]
+        stack = []
+        
+        for i, t in enumerate(T):
+            while stack and t > T[stack[-1]]:
+                prev = stack.pop()
+                res[prev] = i - prev
+            stack.append(i)
         return res
