@@ -1,0 +1,43 @@
+5.26.2020 // Q 148 (divide and conquer + bottom up merge sort)
+- swap the Node instead of Node.val
+- buttom up: constant extra space, top down: O(n) extra space
+
+148. Sort List
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def sortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        # divide and conquer + bottom up merge sort
+        if not head or head.next == None:
+            return head
+        
+        slow, fast = head, head.next  # for the case: 1->2
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        list2 = slow.next
+        slow.next = None  # break the list
+        return self.merge(self.sortList(head), self.sortList(list2))
+    
+    def merge(self, l1, l2):
+        dummyNode = ListNode(0)
+        cur = dummyNode
+        while l1 and l2:
+            if l1.val > l2.val:
+                # swap
+                l2, l1 = l1, l2  # Now l1 is always the smaller one
+            cur.next = l1
+            l1 = l1.next
+            cur = cur.next
+        if l1:
+            cur.next = l1
+        if l2:
+            cur.next = l2
+        return dummyNode.next
