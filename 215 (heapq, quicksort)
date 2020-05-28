@@ -1,0 +1,57 @@
+5.27.2020 // 215 (heapq, quicksort)
+
+quicksort
+O(N) best case / O(N^2) worst case running time + O(1) memory
+-  Why not O(nlogn) ?? because we are not here to sort the entire array, we just here to find the kth largest element
+
+215. Kth Largest Element in an Array
+Solution 1 wiht heapq, O(nlogk) T, O(n) S:
+class Solution(object):
+    def findKthLargest(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        # heap maintain size k
+        h = []
+        for num in nums:
+            heapq.heappush(h, num)
+            if len(h) > k:
+                heapq.heappop(h)
+        return h[-k]
+        
+Solution 2: quick select
+O(N) best case / O(N^2) worst case running time + O(1) memory
+-  Why not O(nlogn) ?? because we are not here to sort the entire array, we just here to find the kth largest element
+class Solution(object):
+    def findKthLargest(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        # quicksort
+        return self.quicksort(nums, len(nums) - k)
+    
+    def quicksort(self, nums, k):  # now, kth largest should be at nums[k] (k count from left to right) when sorted
+        pivot = self.partition(nums, k)
+        if pivot > k:
+            return self.quicksort(nums[0:pivot], k)
+        elif pivot < k:
+            return self.quicksort(nums[pivot + 1:len(nums)], k - pivot - 1)
+        else:
+            return nums[pivot]
+        
+    def partition(self, nums, k):
+        pivot = len(nums) - 1  # last index of nums
+        l = 0
+        while l < pivot:
+            if nums[l] < nums[pivot]:
+                # remain the same
+                l += 1
+            else:
+                nums[l], nums[pivot - 1] = nums[pivot - 1], nums[l]
+                nums[pivot - 1], nums[pivot] = nums[pivot], nums[pivot - 1]
+                pivot -= 1
+        return pivot
