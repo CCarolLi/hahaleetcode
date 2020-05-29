@@ -1,0 +1,29 @@
+5.29.2020 // Q 406 (Greedy, sorted by lambda = tuple)
+- sort by multiple attributes
+for person in sorted(people, key = lambda x : (-x[0], x[1])):
+        # -x[0] - higher person comes first
+        # x[1] - then they have the same height, smaller k person comes first
+
+class Solution(object):
+    def reconstructQueue(self, people):
+        """
+        :type people: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        # greedy
+        # first, pick the current highest people
+        # second, insert them to the array using k as the current index
+        """
+        E.g.
+        input: [[7,0], [4,4], [7,1], [5,0], [6,1], [5,2]]
+        subarray after step 1: [[7,0], [7,1]]
+        subarray after step 2: [[7,0], [6,1], [7,1]]
+        """
+        
+        res = []
+        for person in sorted(people, key = lambda x : (-x[0], x[1])):
+        # -x[0] - higher person comes first
+        # x[1] - then they have the same height, smaller k person comes first
+            res.insert(person[1], person) 
+            # person[1] is the index, person is the tuple
+        return res
