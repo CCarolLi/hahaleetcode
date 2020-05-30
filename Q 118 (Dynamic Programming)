@@ -1,0 +1,44 @@
+5.29.2020 // Q 118 (Dynamic Programming)
+
+
+118. Pascal's Triangle
+Solution 1: simple
+class Solution(object):
+    def generate(self, numRows):
+        """
+        :type numRows: int
+        :rtype: List[List[int]]
+        """
+        if numRows == 0:
+            return []
+        
+        res = [[1] * (i + 1) for i in range(numRows)]
+        
+        for i in range(2, len(res)):
+            for j in range(1, len(res[i]) - 1):
+                res[i][j] = res[i - 1][j - 1] + res[i - 1][j]
+        
+        return res
+        
+        
+Solution 2:
+class Solution(object):
+    def generate(self, numRows):
+        """
+        :type numRows: int
+        :rtype: List[List[int]]
+        """
+        if numRows == 0:
+            return []
+        res = []
+        prev = [1]
+        res.append(prev)
+        for i in range(2, numRows + 1):
+            cur = []
+            cur.append(1)
+            for j in range(1, i - 1):
+                cur.append(prev[j - 1] + prev[j])
+            cur.append(1)
+            res.append(cur[:])
+            prev = cur[:]
+        return res
