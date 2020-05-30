@@ -1,0 +1,25 @@
+5.29.2020 // Q 26 (Two Pointers, Array)
+
+
+26. Remove Duplicates from Sorted Array
+class Solution(object):
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums or len(nums) == 0:
+            return 0
+        left, right = 1, 1
+        # left marks the position to insert
+        # right used to loop every element
+        while right < len(nums):
+            if nums[right] == nums[left - 1]:
+                # duplicates, we skip
+                right += 1
+            else:
+                # unique value
+                nums[left] = nums[right]  # we throw the original value since it's not useful anymore
+                left += 1  # move to the new to-be-inserted position
+                right += 1  # next loop element
+        return left
