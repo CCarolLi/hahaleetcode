@@ -1,4 +1,4 @@
-5.29.2020 // Q 26 (Two Pointers, Array)
+5.29.2020 // Q 26, 27 (Two Pointers, Array)
 
 
 26. Remove Duplicates from Sorted Array
@@ -22,4 +22,25 @@ class Solution(object):
                 nums[left] = nums[right]  # we throw the original value since it's not useful anymore
                 left += 1  # move to the new to-be-inserted position
                 right += 1  # next loop element
+        return left
+
+
+27. Remove Element
+class Solution(object):
+    def removeElement(self, nums, val):
+        """
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        """
+        if not nums or len(nums) == 0:
+            return 0
+        left, right = 0, len(nums) - 1
+        while left <= right:
+            if nums[left] == val:
+                # swap
+                nums[left], nums[right] = nums[right], nums[left]
+                right -= 1
+            else:
+                left += 1
         return left
