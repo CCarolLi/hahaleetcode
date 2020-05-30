@@ -1,0 +1,60 @@
+5.29.2020 // Q 66, 67 (Array) 
+- if len(a) < len(b):
+            a, b = b, a  # length A larger  # avoid different comparisons 
+-           cur = int(tempa[i]) + int(tempb[i]) + carry
+            res += str(cur % 2)
+            carry = cur / 2            
+- when we want to add two strings, we reverse the string first and them do calculations
+
+66. Plus One
+class Solution(object):
+    def plusOne(self, digits):
+        """
+        :type digits: List[int]
+        :rtype: List[int]
+        """
+        if not digits or len(digits) == 0:
+            return digits
+        carry = 1
+        for i in range(len(digits) - 1, -1, -1):
+            digits[i] += carry
+            if digits[i] < 10:
+                carry = 0
+            else:
+                digits[i] -= 10
+                carry = 1
+        if carry == 1:
+            digits.insert(0, 1)
+        return digits
+
+
+67. Add Binary
+class Solution(object):
+    def addBinary(self, a, b):
+        """
+        :type a: str
+        :type b: str
+        :rtype: str
+        """
+        if not a:
+            return b
+        if not b:
+            return a
+        if len(a) < len(b):
+            a, b = b, a  # length A larger
+        tempa = a[::-1]
+        tempb = b[::-1]
+        
+        res = ""
+        carry = 0
+        for i in range(0, len(tempb)):
+            cur = int(tempa[i]) + int(tempb[i]) + carry
+            res += str(cur % 2)
+            carry = cur / 2
+        for i in range(len(tempb), len(tempa)):
+            cur = int(tempa[i]) + carry
+            res += str(cur % 2)
+            carry = cur / 2
+        if carry == 1:
+            res += str(carry)
+        return res[::-1]
