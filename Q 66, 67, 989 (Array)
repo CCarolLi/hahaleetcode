@@ -1,10 +1,16 @@
 5.29.2020 // Q 66, 67 (Array) 
+6.1.2020 // Q 989 
 - if len(a) < len(b):
             a, b = b, a  # length A larger  # avoid different comparisons 
 -           cur = int(tempa[i]) + int(tempb[i]) + carry
             res += str(cur % 2)
             carry = cur / 2            
 - when we want to add two strings, we reverse the string first and them do calculations
+
+- carry, Ar[i] = divmod(Ar[i], 10)
+            The divmod() method takes two numbers and returns a pair of numbers (a tuple) 
+            consisting of their quotient and remainder.
+
 
 66. Plus One
 class Solution(object):
@@ -58,3 +64,29 @@ class Solution(object):
         if carry == 1:
             res += str(carry)
         return res[::-1]
+
+
+989. Add to Array-Form of Integer
+class Solution(object):
+    def addToArrayForm(self, A, K):
+        """
+        :type A: List[int]
+        :type K: int
+        :rtype: List[int]
+        """
+        if not A or len(A) == 0 or K == 0:
+            return A
+        
+        # reverse and add
+        Ar = A[::-1]
+        # A[0] += K
+        carry = K 
+        
+        for i in range(len(Ar)):
+            Ar[i] += carry
+            carry, Ar[i] = divmod(Ar[i], 10)
+        while carry:
+            Ar.append(carry % 10)
+            carry /= 10
+        
+        return Ar[::-1]
